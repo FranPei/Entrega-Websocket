@@ -1,0 +1,90 @@
+[
+  {
+    "title": "TV Samsung 80",
+    "description": "TV Led 80",
+    "price": 600,
+    "thumbnail": "sin Imagen",
+    "code": "abc124",
+    "stock": 22,
+    "status": true,
+    "category": "TV",
+    "id": 1
+  },
+  {
+    "title": "Hitachi LC200",
+    "description": "Parlante Hitachi",
+    "price": 250,
+    "thumbnail": "sin Imagen",
+    "code": "abc125",
+    "stock": 30,
+    "status": true,
+    "category": "Audio",
+    "id": 2
+  },
+  {
+    "title": "Phillips",
+    "description": "Home T",
+    "price": 800,
+    "thumbnail": "sin Imagen",
+    "code": "abc126",
+    "stock": 25,
+    "status": true,
+    "category": "TV",
+    "id": 3
+  },
+  {
+    "title": "Iphone 14 Pro",
+    "description": "Celular Iphone 14 Pro",
+    "price": 1100,
+    "thumbnail": "sin Imagen",
+    "code": "abc127",
+    "stock": 32,
+    "status": true,
+    "category": "Celular",
+    "id": 4
+  },
+  {
+    "title": "Philco Cafetera",
+    "description": "Cafetera 5 lt",
+    "price": 200,
+    "thumbnail": "sin Imagen",
+    "code": "abc129",
+    "stock": 50,
+    "status": true,
+    "category": "Cafetera",
+    "id": 5
+  },
+  {
+    "title": "Kohinoor frozen",
+    "description": "Heladera Kohinoor",
+    "price": 650,
+    "thumbnail": "sin Imagen",
+    "code": "abc1210",
+    "stock": 25,
+    "status": true,
+    "category": "Heladera",
+    "id": 6
+  },
+  {
+    "title": "Play Station 5",
+    "description": "Sony Play5",
+    "price": 850,
+    "thumbnail": "sin Imagen",
+    "code": "abc1211",
+    "stock": 40,
+    "status": true,
+    "category": "VideoGames",
+    "id": 7
+  },
+  {
+    "title": "TV Led LG 80",
+    "description": "TV Led 80 Curvo",
+    "price": 700,
+    "thumbnail": "sin Imagen",
+    "code": "abc114",
+    "stock": 32,
+    "status": true,
+    "category": "TV",
+    "id": 8
+  }
+]
