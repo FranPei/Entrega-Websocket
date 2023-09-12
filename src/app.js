@@ -21,7 +21,7 @@ app.set('view engine','handlebars');
 app.use(express.static(__dirname+'/public'));
 app.use('/', viewRouter);
 
-app.use(express.json());
+//app.use(express.json());
 
 
 
@@ -30,15 +30,89 @@ const managerCarrito = new CarritoManager();
 
 
 let products = [];
+const envio = [];
+
+let act;
+
+
+socketServer.on('connection', socket=>{
+    console.log("Nuevo cliente conectado");
+
+    const productos = [...manager.getProducts()];
+
+    productos.forEach(productos =>{
+       const listado = {
+            title: productos.title,
+            description: productos.escription,
+            price: productos.price,
+            thumbnail: productos.thumbnail,
+            code: productos.code,
+            status: productos.status,
+            category: productos.category,
+            id: productos.id
+        }
+    })
+
+    envio.push = (listado);
+
+    socket.emit('listadoP', envio);
+
+
+    if(act) {
+
+        listado = [];
+        productos = [];
+        envio = [];
+
+        productos = [...manager.getProducts()];
+
+        productos.forEach(productos =>{
+            const listado = {
+                 title: productos.title,
+                 description: productos.escription,
+                 price: productos.price,
+                 thumbnail: productos.thumbnail,
+                 code: productos.code,
+                 status: productos.status,
+                 category: productos.category,
+                 id: productos.id
+             }
+         })
+     
+         envio.push = (listado);
+     
+         socket.emit('listadoAct', envio);
+
+         act = false;
+
+    }
+})
+
+
+function actualizar() {
+    act = true;
+    return act;
+}
 
 
 
+/*
+app.get('/', (req, res) => {
+    //const producto = manager.getProducts();
+    const nuevo = {
+        id: 14,
+        title: "Hola"
+    }
+    res.render('home', {nuevo});
+
+})*/
 
 app.get('/api/products',(req, res)=>{           // "/products?limite=nro"
   
     let limite = req.query.limite;
     if(!limite || !(limite > 0)) return res.send(manager.getProducts());
     res.send(manager.getProducts().slice(0,limite));
+    actualizar();
     
 })
 
@@ -47,16 +121,18 @@ app.get('/api/products/:pid',(req, res)=>{
     let product = manager.getProductByID(parseInt(idProduct));
     if(!product) return res.send({error: "Producto no encontrado"});
     res.send({product});
-    res.render('index', product);
+    actualizar();
 })
 
 app.post('/api/products', (req, res) => {
     let product = req.body; 
     if(!product.title || !product.description ||!product.price ||!product.code ||!product.stock ||!product.status ||!product.category) {
         return res.status(400).send({status:"error", error:"Valores Incompletos"})
+        actualizar();
     }
     manager.addProducts(product);
     res.send({status:"succes", message: "Producto Agregado"});
+    actualizar();
 
 });
 
@@ -68,6 +144,7 @@ app.put('/api/products/:id', (req, res) => {
     const actualizado = manager.updateProduct(userId, updatePro);
     if(!actualizado) return res.send({error: "Producto no encontrado"});
     res.send({status:"succes", message: "Producto Actualizado"});
+    actualizar();
 
 });
 
@@ -77,30 +154,6 @@ app.delete('/api/products/:id', (req, res) => {
     const eliminado = manager.deleteProduct(userId);
     if(!eliminado) return res.send({error: "Producto no encontrado"});
     res.send({status:"succes", message: "Producto Eliminado"});
+    actualizar();
     
-});
-
-////////////////////////CARRITO/////////////////////////////////////
-
-app.post('/api/carts', (req, res) => {
-    managerCarrito.addCarrito();
-    res.send({status:"succes", message: "Carrito Agregado"});
-
-});
-
-app.get('/api/carts/:cid',(req, res)=>{
-    let idCarrito = req.params.cid;
-    let carrito = managerCarrito.getCarritoByID(parseInt(idCarrito));
-    if(!carrito) return res.send({error: "Carrito no encontrado"});
-    res.send({carrito});
-})
-
-app.post('/api/carts/:cid/products/:pid', (req, res) => {
-    let idCarrito = req.params.cid;
-    let idProduct = req.params.pid;
-    const data = req.body;
-    managerCarrito.addProductToCarrito(parseInt(idCarrito), parseInt(idProduct), data);
-    res.send({status:"succes", message: "Producto Agregado"});
-
-
 });
